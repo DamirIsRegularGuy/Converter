@@ -60,6 +60,7 @@ class ConverterActivity: AppCompatActivity() {
                 else binding.editTxtInostran.text.clear()
             }
         }
+        /**/
 
 
 
