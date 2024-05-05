@@ -29,10 +29,11 @@ class ValutsListAdapter(private var listValuts: List<Item>, private val listener
 
             nameOfValute.text = order.fullName
 
-            valueOfValute.text = String.format("%.6f", order.value.toDouble() / order.nominal.toDouble())
+            valueOfValute.text = String.format("%.6f", order.value.toDouble() / order.nominal.toDouble()) + " TJS"
 
             Glide.with(holder.binding.root)
                 .load(order.flag)
+                .circleCrop()
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .into(flag)
 
