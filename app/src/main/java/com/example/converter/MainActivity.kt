@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.generalTextView.text = "Курсы НБТ"
 
+        /*
         binding.cours.setOnClickListener {
             supportFragmentManager
                 .beginTransaction()
@@ -63,6 +64,7 @@ class MainActivity : AppCompatActivity() {
             binding.generalTextView.text = "Конвертор"
 
         }
+         */
     }
 
 

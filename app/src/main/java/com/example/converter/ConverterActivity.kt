@@ -39,9 +39,13 @@ class ConverterActivity: AppCompatActivity() {
         binding.editTxtMestij.hint = "TJS"
         binding.kursValuts.text = "1 ${item.fullName} = ${binding.valueOfValuteConverter.text} Сомони"
 
+        /*
         binding.convertorTextView.setOnClickListener {
             onBackPressed()
         }
+
+
+         */
 
 
 

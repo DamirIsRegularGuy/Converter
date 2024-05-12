@@ -10,8 +10,10 @@ import androidx.fragment.app.Fragment
 import com.example.converter.ConverterActivity
 import com.example.converter.GetInformation
 import com.example.converter.Item
+import com.example.converter.R
 import com.example.converter.ValutsListAdapter
 import com.example.converter.databinding.FragmentActivityMainBinding
+import androidx.fragment.app.FragmentTransaction
 import com.example.converter.databinding.FragmentConverterActivityBinding
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
@@ -26,6 +28,7 @@ class FragmentConverterActivity: Fragment() {
 
     private var _binding: FragmentActivityMainBinding? = null
     private val binding get() = _binding!!
+    private lateinit var fragmentConvertToTjs: FragmentConvertToTjs
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -80,6 +83,7 @@ class FragmentConverterActivity: Fragment() {
         valutsList.getData().enqueue(object : Callback<List<Item>> {
             override fun onResponse(p0: Call<List<Item>>, p1: Response<List<Item>>) {
                 if(p1.isSuccessful){
+                    fragmentConvertToTjs = FragmentConvertToTjs()
 
                     // binding.progressBar.visibility = View.GONE
                     val resultList = p1.body()?: emptyList()
@@ -88,22 +92,28 @@ class FragmentConverterActivity: Fragment() {
                     binding.cardViewOfList.visibility = View.VISIBLE
 
                     binding.lisOfValute.adapter = ValutsListAdapter(resultList, listener = { item,   ->
-                        /*
+
                         val gson = Gson()
                         val itemJson = gson.toJson(item)
                         val bundle = Bundle().apply {
                             putString("itemJson", itemJson)
                         }
 
-                        val fragment = FragmentConverterActivity()
+                        val fragment = FragmentConvertToTjs()
                         fragment.arguments = bundle
-                         */
 
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.container, fragment)
+                            .commit()
+
+
+                        /*
                         val intent = Intent(requireContext(), ConverterActivity::class.java)
                         val gson = Gson()
                         val itemJson = gson.toJson(item)
                         intent.putExtra("item", itemJson)
                         startActivity(intent)
+                         */
                     })
                 }
                 else{

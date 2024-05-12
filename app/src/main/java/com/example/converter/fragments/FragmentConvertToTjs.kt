@@ -1,6 +1,7 @@
 package com.example.converter.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,10 +34,13 @@ class FragmentConvertToTjs: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.valuteConverter.text = "15623yui  "
-        /*
+
         val itemJson = arguments?.getString("itemJson")
-        val item = Gson().fromJson(itemJson, Item::class.java)
+        var item = Gson().fromJson(itemJson, Item::class.java)
+
+
+
+
 
         binding.valuteConverter.text = item.name
         binding.nameOfValuteConverter.text = item.fullName
@@ -48,7 +52,9 @@ class FragmentConvertToTjs: Fragment() {
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .into(binding.flagConverter)
 
-         */
+
+
+
 
     }
 
