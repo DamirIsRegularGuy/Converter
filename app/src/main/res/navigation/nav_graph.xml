@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@+id/converter_frag">
+
+    <fragment
+        android:id="@+id/converter_frag"
+        android:name="com.example.converter.fragments.FragmentConverterActivity"
+        android:label="Курс НБТ" >
+
+        <action
+            android:id="@+id/action_converter_frag_to_fragmentConvertToTjs"
+            app:destination="@id/to_tjs_frag" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/exchanger_frag"
+        android:name="com.example.converter.fragments.FragmentExchanger"
+        android:label="Обменник" />
+
+    <fragment
+        android:id="@+id/to_tjs_frag"
+        android:name="com.example.converter.fragments.FragmentConvertToTjs"
+        android:label="Конвертор" >
+
+        <argument
+            android:name="itemString"
+            app:argType="string" />
+
+    </fragment>
+</navigation>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/backgraund_color"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/name_of_bank"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        tools:text="Humo"
+        android:textColor="#212121"
+        android:textSize="18sp"
+        android:layout_marginTop="14dp"
+        android:layout_marginStart="16dp"
+        android:drawableStart="@drawable/active_icon"
+        android:drawablePadding="10dp"/>
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        app:cardCornerRadius="12dp">
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/prodazha_kuplja"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+
+    </com.google.android.material.card.MaterialCardView>
+
+
+
+
+</LinearLayout>

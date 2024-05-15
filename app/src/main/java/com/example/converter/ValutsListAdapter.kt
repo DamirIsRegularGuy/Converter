@@ -25,20 +25,22 @@ class ValutsListAdapter(private var listValuts: List<Item>, private val listener
     override fun onBindViewHolder(holder: ItemViewHolder, position: Int) {
         val order = listValuts[position]
         with(holder.binding){
-            valute.text = order.name
+            if(order.name != "TJS") {
+                valute.text = order.name
 
-            nameOfValute.text = order.fullName
+                nameOfValute.text = order.fullName
 
-            valueOfValute.text = String.format("%.6f", order.value.toDouble() / order.nominal.toDouble()) + " TJS"
+                valueOfValute.text = String.format("%.6f", order.value.toDouble() / order.nominal.toDouble()) + " TJS"
 
-            Glide.with(holder.binding.root)
-                .load(order.flag)
-                .circleCrop()
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .into(flag)
+                Glide.with(holder.binding.root)
+                    .load(order.flag)
+                    .circleCrop()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(flag)
 
-            root.setOnClickListener {
-                 listener(order)
+                root.setOnClickListener {
+                    listener(order)
+                }
             }
         }
     }

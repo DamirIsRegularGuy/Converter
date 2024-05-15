@@ -14,7 +14,9 @@ import com.example.converter.R
 import com.example.converter.ValutsListAdapter
 import com.example.converter.databinding.FragmentActivityMainBinding
 import androidx.fragment.app.FragmentTransaction
+import androidx.navigation.fragment.findNavController
 import com.example.converter.databinding.FragmentConverterActivityBinding
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.gson.Gson
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -41,6 +43,10 @@ class FragmentConverterActivity: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val bottomNavigationView: BottomNavigationView = requireActivity().findViewById(R.id.buttom_menu)
+        bottomNavigationView.visibility = View.VISIBLE
+
+
 
         val logging =  HttpLoggingInterceptor().apply { setLevel(HttpLoggingInterceptor.Level.BODY) }
 
@@ -82,19 +88,28 @@ class FragmentConverterActivity: Fragment() {
 
         valutsList.getData().enqueue(object : Callback<List<Item>> {
             override fun onResponse(p0: Call<List<Item>>, p1: Response<List<Item>>) {
-                if(p1.isSuccessful){
-                    fragmentConvertToTjs = FragmentConvertToTjs()
+                if (this@FragmentConverterActivity.isAdded) {
 
-                    // binding.progressBar.visibility = View.GONE
-                    val resultList = p1.body()?: emptyList()
-                    Log.d("TAG_TEST", "что то так ${resultList}")
-                    binding.progressBar.visibility = View.GONE
-                    binding.cardViewOfList.visibility = View.VISIBLE
+                    if (p1.isSuccessful) {
+                        fragmentConvertToTjs = FragmentConvertToTjs()
 
-                    binding.lisOfValute.adapter = ValutsListAdapter(resultList, listener = { item,   ->
+                        // binding.progressBar.visibility = View.GONE
+                        val resultList = p1.body() ?: emptyList()
+                        Log.d("TAG_TEST", "что то так ${resultList}")
+                        binding.progressBar.visibility = View.GONE
+                        binding.cardViewOfList.visibility = View.VISIBLE
 
-                        val gson = Gson()
-                        val itemJson = gson.toJson(item)
+                        binding.lisOfValute.adapter =
+                            ValutsListAdapter(resultList, listener = { item, ->
+
+
+                                val gson = Gson()
+                                val itemJsonstr = gson.toJson(item)
+
+                                val action = FragmentConverterActivityDirections.actionConverterFragToFragmentConvertToTjs(itemString = itemJsonstr)
+                                findNavController().navigate(action)
+
+                                /*
                         val bundle = Bundle().apply {
                             putString("itemJson", itemJson)
                         }
@@ -102,29 +117,41 @@ class FragmentConverterActivity: Fragment() {
                         val fragment = FragmentConvertToTjs()
                         fragment.arguments = bundle
 
+
                         requireActivity().supportFragmentManager.beginTransaction()
                             .replace(R.id.container, fragment)
+                            .addToBackStack(null)
                             .commit()
+                         */
 
 
-                        /*
+                                /*
+                        requireActivity().supportFragmentManager.beginTransaction()
+                            .replace(R.id.container, FragmentConvertToTjs().apply {
+                                arguments = bundle
+                            })
+                            .addToBackStack(null)
+                            .commit()
+                         */
+
+                                /*
                         val intent = Intent(requireContext(), ConverterActivity::class.java)
                         val gson = Gson()
                         val itemJson = gson.toJson(item)
                         intent.putExtra("item", itemJson)
                         startActivity(intent)
                          */
-                    })
-                }
-                else{
-                    //binding.progressBar.visibility = View.GONE
-                    Log.d("TAG_TEST", "!isSuccessful: что то пошло не так")
-                    Log.d("TAG_TEST", "onResponse: ${p1.body()}")
-                    Log.d("TAG_TEST", "onResponse: ${p1.errorBody()?.string()}")
-                    Log.d("TAG_TEST", "")
-                    binding.progressBar.visibility = View.GONE
-                    binding.cardViewOfList.visibility = View.GONE
-                    binding.errorPanel.visibility = View.VISIBLE
+                            })
+                    } else {
+                        //binding.progressBar.visibility = View.GONE
+                        Log.d("TAG_TEST", "!isSuccessful: что то пошло не так")
+                        Log.d("TAG_TEST", "onResponse: ${p1.body()}")
+                        Log.d("TAG_TEST", "onResponse: ${p1.errorBody()?.string()}")
+                        Log.d("TAG_TEST", "")
+                        binding.progressBar.visibility = View.GONE
+                        binding.cardViewOfList.visibility = View.GONE
+                        binding.errorPanel.visibility = View.VISIBLE
+                    }
                 }
             }
 
